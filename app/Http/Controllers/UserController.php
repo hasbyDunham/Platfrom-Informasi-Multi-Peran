@@ -3,18 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
+use DB;
+use Hash;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
         $data = User::latest()->paginate(5);
 
-        return View('user.index', compact('data'))->with('i', ($request->input('page', 1) - 1) * 5);
+        return View('users.index', compact('data'))->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -23,7 +28,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name', 'name')->all();
-        return View('user.create', compact('roles'));
+        return View('users.create', compact('roles'));
     }
 
     /**
@@ -41,8 +46,8 @@ class UserController extends Controller
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
 
-        $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        $users = User::create($input);
+        $users->assignRole($request->input('roles'));
 
         return redirect()->route('users.index')
             ->with('success', 'User created successfully');
@@ -61,11 +66,11 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $user = User::find($id);
+        $users = User::find($id);
         $roles = Role::pluck('name', 'name')->all();
-        $userRole = $user->roles->pluck('name', 'name')->all();
+        $userRole = $users->roles->pluck('name', 'name')->all();
 
-        return view('users.update', compact('user', 'roles', 'userRole'));
+        return view('users.update', compact('users', 'roles', 'userRole'));
     }
 
     /**
@@ -87,11 +92,11 @@ class UserController extends Controller
             $input = Arr::except($input, array('password'));
         }
 
-        $user = User::find($id);
-        $user->update($input);
+        $users = User::find($id);
+        $users->update($input);
         DB::table('model_has_roles')->where('model_id', $id)->delete();
 
-        $user->assignRole($request->input('roles'));
+        $users->assignRole($request->input('roles'));
 
         return redirect()->route('users.index')
             ->with('success', 'User updated successfully');
