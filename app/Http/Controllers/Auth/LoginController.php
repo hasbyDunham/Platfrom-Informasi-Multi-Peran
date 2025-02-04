@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -19,6 +18,17 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+
+    // protected function authenticated()
+    // {
+    //     if (Auth::user()->hasRole('Admin')) {
+    //         return redirect('/admin');
+    //     } elseif (Auth::user()->hasRole('Writer')) {
+    //         return redirect('/');
+    //     } else {
+    //         return redirect('/');
+    //     }
+    // }
 
     /**
      * Where to redirect users after login.
