@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategorieController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,3 +21,9 @@ Route::group(['middleware'=> ['auth']], function() {
     Route::resource('user', UserController::class);
     Route::resource('categorie', CategorieController::class);
 });
+
+// Route Untuk Admin
+
+// Route Untuk Writer
+
+// Route Untuk User

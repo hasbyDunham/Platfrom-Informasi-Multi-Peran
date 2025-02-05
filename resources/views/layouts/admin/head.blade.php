@@ -110,6 +110,7 @@
         <li class="nav-item d-lg-none mobile-search-btn">
           <a class="nav-link" href="javascript:;"><i class="material-icons-outlined">search</i></a>
         </li>
+
         {{-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="avascript:;" data-bs-toggle="dropdown"><img src="../assets/images/county/02.png" width="22" alt="">
           </a>
@@ -271,6 +272,7 @@
             </div>
           </div>
         </li> --}}
+
         {{-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-bs-auto-close="outside"
             data-bs-toggle="dropdown" href="javascript:;"><i class="material-icons-outlined">apps</i></a>
@@ -410,11 +412,12 @@
             </div>
           </div>
         </li> --}}
-        {{-- <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" data-bs-auto-close="outside"
+
+        <li class="nav-item dropdown">
+          {{-- <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" data-bs-auto-close="outside"
             data-bs-toggle="dropdown" href="javascript:;"><i class="material-icons-outlined">notifications</i>
             <span class="badge-notify">5</span>
-          </a>
+          </a> --}}
           <div class="dropdown-menu dropdown-notify dropdown-menu-end shadow">
             <div class="px-3 py-1 d-flex align-items-center justify-content-between border-bottom">
               <h5 class="notiy-title mb-0">Notifications</h5>
@@ -547,13 +550,15 @@
               </div>
             </div>
           </div>
-        </li> --}}
+        </li>
+
         {{-- <li class="nav-item d-md-flex d-none">
           <a class="nav-link position-relative" data-bs-toggle="offcanvas" href="#offcanvasCart"><i
               class="material-icons-outlined">shopping_cart</i>
             <span class="badge-notify">8</span>
           </a>
         </li> --}}
+
         <li class="nav-item dropdown">
           <a href="javascrpt:;" class="dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown">
              <img src="https://placehold.co/110x110/png" class="rounded-circle p-1 border" width="45" height="45" alt="">
