@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+Use Alert;
+
 
 class CategorieController extends Controller
 {
@@ -19,8 +22,9 @@ class CategorieController extends Controller
      */
     public function index()
     {
-        $data = categorie::latest()->paginate(5);
+        $data = Categorie::latest()->paginate(5);
 
+        confirmDelete("Delete", "Are you sure you want to delete?");
         return view('categories.index', compact('data'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -45,8 +49,8 @@ class CategorieController extends Controller
 
         categorie::create($request->all());
 
-        return redirect()->route('categorie.index')
-            ->with('success', 'categorie created successfully.');
+        toast('Categories Added','success');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -60,35 +64,36 @@ class CategorieController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Categorie $categorie)
+    public function edit(string $id)
     {
+        $categorie = Categorie::findOrFail($id);
         return view('categories.update', compact('categorie'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Categorie $categorie)
+    public function update(Request $request, string $id)
     {
         request()->validate([
             'name' => 'required',
             'description' => 'required',
         ]);
 
+        $categorie = Categorie::findOrFail($id);
         $categorie->update($request->all());
 
-        return redirect()->route('categorie.index')
-            ->with('success', 'categorie updated successfully');
+        toast('Categories Updated','success');
+        return redirect()->route('categories.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categorie $categorie)
+    public function destroy(string $id)
     {
-        $categorie->delete();
-
-        return redirect()->route('categorie.index')
-            ->with('success', 'categorie deleted successfully');
+        Categorie::find($id)->delete();
+        toast('Delete Data Successfully','success');
+        return redirect()->route('categories.index');
     }
 }

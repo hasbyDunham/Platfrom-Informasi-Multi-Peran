@@ -5,7 +5,7 @@
                 <img src="{{ asset('assets/back/images/logo-icon.png') }}" class="logo-img" alt="">
             </div>
             <div class="logo-name flex-grow-1">
-                <h5 class="mb-0">Maxton</h5>
+                <h5 class="mb-0">Warta Balarea</h5>
             </div>
             <div class="sidebar-close">
                 <span class="material-icons-outlined">close</span>
@@ -15,14 +15,14 @@
             <!--navigation-->
             <ul class="metismenu" id="sidenav">
                 <li>
-                    <a href="javascript:;">
+                    <a href="{{ url('/') }}">
                         <div class="parent-icon"><i class="material-icons-outlined">home</i>
                         </div>
                         <div class="menu-title">Dashboard</div>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('user.index') }}">
+                    <a href="{{ route('users.index') }}">
                         <div class="parent-icon"><i class="material-icons-outlined">person</i>
                         </div>
                         <div class="menu-title">User Management</div>
@@ -37,7 +37,7 @@
                     </a>
                     <ul>
                         <li>
-                            <a href="{{ route('categorie.index') }}"><i
+                            <a href="{{ route('categories.index') }}"><i
                                     class="material-icons-outlined">arrow_right</i>Categories</a>
                         </li>
                         <li>

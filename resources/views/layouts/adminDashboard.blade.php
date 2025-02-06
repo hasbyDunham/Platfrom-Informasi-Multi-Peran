@@ -165,7 +165,7 @@
         new PerfectScrollbar(".user-list")
     </script>
     {{-- @stack('scripts') --}}
-    {{-- @include('sweetalert::alert') --}}
+    @include('sweetalert::alert')
 </body>
 
 </html>

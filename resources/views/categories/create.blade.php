@@ -7,7 +7,7 @@
             <h2>Create New Categories</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary btn-sm mb-2" href="{{ route('categorie.index') }}"><i class="fa fa-arrow-left"></i> Back</a>
+            <a class="btn btn-primary btn-sm mb-2" href="{{ route('categories.index') }}"><i class="fa fa-arrow-left"></i> Back</a>
         </div>
     </div>
 </div>
@@ -23,7 +23,7 @@
     </div>
 @endif
 
-<form method="POST" action="{{ route('categorie.store') }}">
+<form method="POST" action="{{ route('categories.store') }}">
     @csrf
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">

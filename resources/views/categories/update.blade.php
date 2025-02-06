@@ -7,7 +7,7 @@
                 <h2>Edit Categorie</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary btn-sm mb-2" href="{{ route('categorie.index') }}"><i class="fa fa-arrow-left"></i>
+                <a class="btn btn-primary btn-sm mb-2" href="{{ route('categories.index') }}"><i class="fa fa-arrow-left"></i>
                     Back</a>
             </div>
         </div>
@@ -24,7 +24,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('categorie.update', $categorie->id) }}">
+    <form method="POST" action="{{ route('categories.update', $categorie->id) }}">
         @csrf
         @method('PUT')
 

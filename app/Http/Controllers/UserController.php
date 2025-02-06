@@ -35,6 +35,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
     public function create()
     {
         $roles = Role::pluck('name', 'name')->all();
@@ -44,6 +45,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -59,13 +61,14 @@ class UserController extends Controller
         $users = User::create($input);
         $users->assignRole($request->input('roles'));
 
-        return redirect()->route('user.index')
-            ->with('success', 'User created successfully');
+        toast('Users Added','success');
+        return redirect()->route('users.index');
     }
 
     /**
      * Display the specified resource.
      */
+
     public function show(string $id)
     {
         //
@@ -74,6 +77,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
     public function edit(string $id)
     {
         $users = User::find($id);
@@ -86,6 +90,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, string $id)
     {
         $this->validate($request, [
@@ -108,17 +113,18 @@ class UserController extends Controller
 
         $users->assignRole($request->input('roles'));
 
-        return redirect()->route('user.index')
-            ->with('success', 'User updated successfully');
+        toast('Users Updated','success');
+        return redirect()->route('users.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(string $id)
     {
         User::find($id)->delete();
-        return redirect()->route('user.index')
+        return redirect()->route('users.index')
             ->with('success', 'User deleted successfully');
     }
 }

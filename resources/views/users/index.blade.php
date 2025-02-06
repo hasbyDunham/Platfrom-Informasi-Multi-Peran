@@ -7,7 +7,7 @@
                 <h2>Users Management</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success mb-2" href="{{ route('user.create') }}"><i class="fa fa-plus"></i> Create New
+                <a class="btn btn-success mb-2" href="{{ route('users.create') }}"><i class="fa fa-plus"></i> Create New
                     User</a>
             </div>
         </div>
@@ -41,10 +41,10 @@
                         @endif
                     </td>
                     <td>
-                        {{-- <a class="btn btn-info btn-sm" href="{{ route('user.show',$user->id) }}"><i class="fa-solid fa-list"></i> Show</a> --}}
-                        <a class="btn btn-warning btn-sm" href="{{ route('user.edit', $user->id) }}"><i
+                        {{-- <a class="btn btn-info btn-sm" href="{{ route('users.show',$user->id) }}"><i class="fa-solid fa-list"></i> Show</a> --}}
+                        <a class="btn btn-warning btn-sm" href="{{ route('users.edit', $user->id) }}"><i
                                 class="fa-solid fa-pen-to-square"></i> Edit</a>
-                        <form method="POST" action="{{ route('user.destroy', $user->id) }}" style="display:inline">
+                        <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display:inline">
                             @csrf
                             @method('DELETE')
 
@@ -66,10 +66,10 @@
                         @endif
                     </td>
                     <td>
-                        {{-- <a class="btn btn-info btn-sm" href="{{ route('user.show',$user->id) }}"><i class="fa-solid fa-list"></i> Show</a> --}}
-                        <a class="btn btn-warning btn-sm" href="{{ route('user.edit', $user->id) }}"><i
+                        {{-- <a class="btn btn-info btn-sm" href="{{ route('users.show',$user->id) }}"><i class="fa-solid fa-list"></i> Show</a> --}}
+                        <a class="btn btn-warning btn-sm" href="{{ route('users.edit', $user->id) }}"><i
                                 class="fa-solid fa-pen-to-square"></i> Edit</a>
-                        <form method="POST" action="{{ route('user.destroy', $user->id) }}" style="display:inline">
+                        <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display:inline">
                             @csrf
                             @method('DELETE')
 

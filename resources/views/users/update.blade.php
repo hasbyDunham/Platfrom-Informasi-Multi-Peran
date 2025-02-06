@@ -7,7 +7,7 @@
             <h2>Edit User</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary btn-sm mb-2" href="{{ route('user.index') }}"><i class="fa fa-arrow-left"></i> Back</a>
+            <a class="btn btn-primary btn-sm mb-2" href="{{ route('users.index') }}"><i class="fa fa-arrow-left"></i> Back</a>
         </div>
     </div>
 </div>
@@ -23,7 +23,7 @@
     </div>
 @endif
 
-<form method="POST" action="{{ route('user.update', $users->id) }}">
+<form method="POST" action="{{ route('users.update', $users->id) }}">
     @csrf
     @method('PUT')
 
