@@ -41,7 +41,8 @@
                 @csrf
                 @method('DELETE')
 
-                <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
+                <a href="{{ route('roles.destroy', $role->id) }}" class="btn btn-sm btn-danger btn-sm"
+                    data-confirm-delete="true"><i class="fa-solid fa-trash"></i>Delete</a>
             </form>
             @endcan
         </td>

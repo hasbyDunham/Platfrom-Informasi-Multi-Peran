@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -37,7 +37,7 @@ class HomeController extends Controller
         }
 
         // Jika tidak ada role yang sesuai, tetap tampilkan halaman utama
-        return view('home');
+        return view('front.home');
 
         // return view('home');
     }

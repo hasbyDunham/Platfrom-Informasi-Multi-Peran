@@ -25,8 +25,9 @@ class RolesController extends Controller
     public function index( Request $request)
     {
         $roles = Role::orderBy('id', 'asc')->paginate(5);
-        return view('roles.index', compact('roles'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        confirmDelete("Delete", "Are you sure you want to delete?");
+
+        return view('roles.index', compact('roles'))->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -56,8 +57,8 @@ class RolesController extends Controller
         $role = Role::create(['name' => $request->input('name')]);
         $role->syncPermissions($permissionsID);
 
-        return redirect()->route('roles.index')
-            ->with('success', 'Role created successfully');
+        toast('Roles Added','success');
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -108,8 +109,8 @@ class RolesController extends Controller
 
         $role->syncPermissions($permissionsID);
 
-        return redirect()->route('roles.index')
-            ->with('success', 'Role updated successfully');
+        toast('Roles Updated','success');
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -118,7 +119,8 @@ class RolesController extends Controller
     public function destroy(string $id)
     {
         DB::table("roles")->where('id', $id)->delete();
-        return redirect()->route('roles.index')
-            ->with('success', 'Role deleted successfully');
+
+        toast('Delete Data Successfully','success');
+        return redirect()->route('roles.index');
     }
 }

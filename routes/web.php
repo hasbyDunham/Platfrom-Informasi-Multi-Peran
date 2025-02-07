@@ -18,12 +18,6 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::group(['middleware'=> ['auth']], function() {
-//     Route::resource('roles', RolesController::class);
-//     Route::resource('user', UserController::class);
-//     Route::resource('categorie', CategorieController::class);
-// });
-
 // ================== ADMIN ROUTES ===================
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:Admin']], function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
@@ -46,3 +40,10 @@ Route::group(['prefix' => 'writer', 'middleware' => ['auth', 'role:Writer']], fu
 Route::group(['prefix' => 'user', 'middleware' => ['auth', 'role:User']], function () {
     Route::post('/comment', [UserController::class, 'comment'])->name('user.comment');
 });
+
+    
+    // Route::group(['middleware'=> ['auth']], function() {
+    //     Route::resource('roles', RolesController::class);
+    //     Route::resource('user', UserController::class);
+    //     Route::resource('categorie', CategorieController::class);
+    // });

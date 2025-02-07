@@ -28,6 +28,7 @@ class UserController extends Controller
     {
 
         $data = User::orderBy('created_at', 'asc')->paginate(5);
+        confirmDelete("Delete", "Are you sure you want to delete?");
 
         return View('users.index', compact('data'))->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -124,7 +125,8 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         User::find($id)->delete();
-        return redirect()->route('users.index')
-            ->with('success', 'User deleted successfully');
+        
+        toast('Delete Data Successfully','success');
+        return redirect()->route('users.index');
     }
 }
