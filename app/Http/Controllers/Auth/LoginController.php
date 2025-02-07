@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -24,11 +25,10 @@ class LoginController extends Controller
     {
         if (Auth::user()->hasRole('Admin')) {
             return redirect('/admin');
-        } elseif (Auth::user()->hasRole('Writer')) {
-            return redirect('/');
-        } else {
-            return redirect('/');
         }
+
+        // Writer dan User
+        return redirect('/');
     }
 
     /**

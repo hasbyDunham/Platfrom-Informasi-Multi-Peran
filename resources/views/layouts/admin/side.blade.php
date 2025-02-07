@@ -37,12 +37,12 @@
                     </a>
                     <ul>
                         <li>
-                            <a href="{{ route('categories.index') }}"><i
-                                    class="material-icons-outlined">arrow_right</i>Categories</a>
-                        </li>
-                        <li>
                             <a href="{{ route('roles.index') }}"><i
                                     class="material-icons-outlined">arrow_right</i>Roles</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('categories.index') }}"><i
+                                    class="material-icons-outlined">arrow_right</i>Categories</a>
                         </li>
                     </ul>
                 </li>

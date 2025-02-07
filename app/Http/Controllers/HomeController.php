@@ -31,13 +31,11 @@ class HomeController extends Controller
         if ($user) {
             if ($user->hasRole('Admin')) {
                 return redirect('/admin'); // Jika role Admin
-            } elseif ($user->hasRole('Writer')) {
-                return redirect('/writer'); // Jika role Writer
             }
         }
 
         // Jika tidak ada role yang sesuai, tetap tampilkan halaman utama
-        return view('front.home');
+        return view('front.home', compact('user'));
 
         // return view('home');
     }

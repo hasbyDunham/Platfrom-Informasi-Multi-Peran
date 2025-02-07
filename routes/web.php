@@ -29,19 +29,22 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:Admin']], func
 });
 
 // ================== WRITER ROUTES ===================
-Route::group(['prefix' => 'writer', 'middleware' => ['auth', 'role:Writer']], function () {
+Route::middleware(['auth', 'role:Writer'])->prefix('writer')->group(function () {
     Route::get('/', [WriterController::class, 'index'])->name('writer.index');
-
-    // Tambahkan route lain yang hanya bisa diakses oleh Writer
-    // Route::resource('posts', PostController::class);
 });
+// Route::group(['prefix' => 'writer', 'middleware' => ['auth', 'role:Writer']], function () {
+//     Route::get('/', [WriterController::class, 'index'])->name('writer.index');
+
+//     // Tambahkan route lain yang hanya bisa diakses oleh Writer
+//     // Route::resource('posts', PostController::class);
+// });
 
 // ================== USER ROUTES ===================
 Route::group(['prefix' => 'user', 'middleware' => ['auth', 'role:User']], function () {
     Route::post('/comment', [UserController::class, 'comment'])->name('user.comment');
 });
 
-    
+
     // Route::group(['middleware'=> ['auth']], function() {
     //     Route::resource('roles', RolesController::class);
     //     Route::resource('user', UserController::class);
