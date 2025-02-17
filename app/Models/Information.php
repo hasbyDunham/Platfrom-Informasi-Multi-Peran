@@ -6,12 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-
-class Categorie extends Model
+class Information extends Model
 {
-    protected $fillable = [
-        'name', 'description'
-    ];
 
     // Menyimpan slug otomatis ketika membuat atau memperbarui berita
     public static function boot()
@@ -19,25 +15,25 @@ class Categorie extends Model
         parent::boot();
 
         // Menggunakan event 'creating' untuk membuat slug otomatis sebelum berita disimpan
-        static::creating(function ($categorie) {
+        static::creating(function ($information) {
             // Membuat slug dari judul jika slug tidak ada
-            if (empty($categorie->slug)) {
-                $categorie->slug = Str::slug($categorie->name);
+            if (empty($information->slug)) {
+                $information->slug = Str::slug($information->title);
             }
 
             // Menangani duplikasi slug
-            $slug = $categorie->slug;
+            $slug = $information->slug;
             $originalSlug = $slug;
             $count = 1;
 
             // Periksa apakah slug sudah ada, jika ya, tambahkan angka di belakang slug
-            while (Categorie::where('slug', $slug)->exists()) {
+            while (Information::where('slug', $slug)->exists()) {
                 $slug = $originalSlug . '-' . $count;
                 $count++;
             }
 
             // Set slug yang unik
-            $categorie->slug = $slug;
+            $information->slug = $slug;
         });
     }
 

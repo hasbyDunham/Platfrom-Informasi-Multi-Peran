@@ -43,30 +43,30 @@
         <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
       </div> --}}
 
-        <div class="user-menu">
-            @if (Auth::check())
-                <div class="dropdown">
-                    <a href="#" class="user-icon" id="userDropdown" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="bi bi-person-circle"></i> {{ Auth::user()->name }}
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                        </li>
-                    </ul>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
-                {{-- Tautan Dashboard Writer --}}
-                @if (auth()->user()->hasRole('Writer'))
-                    <a href="{{ route('writer.index') }}" class="btn btn-outline-secondary btn-sm">Dashboard Writer</a>
-                @endif
-            @else
-                <a href="{{ route('login') }}" class="login-button"><i class="bi bi-person-circle"></i> Login</a>
-            @endif
-        </div>
+      <div class="user-menu">
+        @if (Auth::check())
+            <div class="dropdown">
+                <a href="#" class="user-icon" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle"></i> {{ Auth::user()->name }}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                    {{-- Tautan Dashboard Writer --}}
+                    @if (auth()->user()->hasRole('Writer'))
+                        <li><a class="dropdown-item" href="{{ route('writer.index') }}">Dashboard Writer</a></li>
+                    @endif
+                    <li>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                    </li>
+                </ul>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
+        @else
+            <a href="{{ route('login') }}" class="login-button"><i class="bi bi-person-circle"></i> Login</a>
+        @endif
+    </div>
 
     </div>
 </header>

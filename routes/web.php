@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\InformationController;
 use App\Http\Controllers\WriterController;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,16 +23,21 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:Admin']], function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
 
-    // Resource routes untuk mengelola data
+    // Resource routes untuk Data Master
     Route::resource('users', UserController::class);
     Route::resource('roles', RolesController::class);
     Route::resource('categories', CategorieController::class);
+    Route::resource('information', InformationController::class);
 });
 
 // ================== WRITER ROUTES ===================
 Route::middleware(['auth', 'role:Writer'])->prefix('writer')->group(function () {
     Route::get('/', [WriterController::class, 'index'])->name('writer.index');
+
+    // Resource route untuk Data Master
+    Route::resource('information', InformationController::class);
 });
+
 // Route::group(['prefix' => 'writer', 'middleware' => ['auth', 'role:Writer']], function () {
 //     Route::get('/', [WriterController::class, 'index'])->name('writer.index');
 
