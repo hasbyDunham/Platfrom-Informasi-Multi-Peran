@@ -25,7 +25,7 @@ class CategorieController extends Controller
         $data = Categorie::latest()->paginate(5);
 
         confirmDelete("Delete", "Are you sure you want to delete?");
-        return view('categories.index', compact('data'))
+        return view('admin.dataMaster.categories.index', compact('data'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -34,7 +34,7 @@ class CategorieController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        return view('admin.dataMaster.categories.create');
     }
 
     /**
@@ -67,7 +67,7 @@ class CategorieController extends Controller
     public function edit(string $id)
     {
         $categorie = Categorie::findOrFail($id);
-        return view('categories.update', compact('categorie'));
+        return view('admin.dataMaster.categories.update', compact('categorie'));
     }
 
     /**

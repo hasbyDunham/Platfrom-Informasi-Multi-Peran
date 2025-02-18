@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('information', function (Blueprint $table) {
             $table->id();
+            $table->string('title', 255);
+            $table->text('content');
+            $table->foreignId('category_id')->constrained(); // Relasi ke tabel categories
+            $table->foreignId('user_id')->constrained(); // Relasi ke tabel users
+            $table->string('image', 255)->nullable();
+            $table->enum('status', ['draft', 'published']); // Contoh enum
+
             $table->timestamps();
         });
     }

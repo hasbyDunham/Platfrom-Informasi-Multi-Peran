@@ -44,6 +44,10 @@
                             <a href="{{ route('categories.index') }}"><i
                                     class="material-icons-outlined">arrow_right</i>Categories</a>
                         </li>
+                        <li>
+                            <a href="{{ route('admin.information.index') }}"><i
+                                    class="material-icons-outlined">arrow_right</i>Information</a>
+                        </li>
                     </ul>
                 </li>
             </ul>

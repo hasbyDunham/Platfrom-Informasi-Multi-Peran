@@ -30,7 +30,7 @@ class UserController extends Controller
         $data = User::orderBy('created_at', 'asc')->paginate(5);
         confirmDelete("Delete", "Are you sure you want to delete?");
 
-        return View('users.index', compact('data'))->with('i', ($request->input('page', 1) - 1) * 5);
+        return View('admin.dataMaster.users.index', compact('data'))->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -40,7 +40,8 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name', 'name')->all();
-        return View('users.create', compact('roles'));
+
+        return View('admin.dataMaster.users.create', compact('roles'));
     }
 
     /**
@@ -85,7 +86,7 @@ class UserController extends Controller
         $roles = Role::pluck('name', 'name')->all();
         $userRole = $users->roles->pluck('name', 'name')->all();
 
-        return view('users.update', compact('users', 'roles', 'userRole'));
+        return view('admin.dataMaster.users.update', compact('users', 'roles', 'userRole'));
     }
 
     /**
@@ -125,7 +126,7 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         User::find($id)->delete();
-        
+
         toast('Delete Data Successfully','success');
         return redirect()->route('users.index');
     }

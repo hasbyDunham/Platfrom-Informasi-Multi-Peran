@@ -9,6 +9,25 @@ use Illuminate\Support\Str;
 class Information extends Model
 {
 
+    use HasFactory;
+
+    protected $fillable = ['title', 'content', 'category_id', 'user_id', 'image', 'status'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Categorie::class);
+    }
+
+    // public function comments()
+    // {
+    //     return $this->hasMany(Comment::class);
+    // }
+
     // Menyimpan slug otomatis ketika membuat atau memperbarui berita
     public static function boot()
     {
@@ -37,6 +56,9 @@ class Information extends Model
         });
     }
 
-    use HasFactory;
-
+    public function getRouteKeyName()
+    {
+        return 'slug'; // Laravel akan otomatis mencari berdasarkan slug, bukan id
+    }
+    
 }

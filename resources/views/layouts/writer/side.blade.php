@@ -30,7 +30,7 @@
           </li>
           <li class="nav-header">Data Master</li>
           <li class="nav-item">
-            <a href="./docs/introduction.html" class="nav-link">
+            <a href="{{ route('writer.information.index') }}" class="nav-link">
               <i class="nav-icon bi bi-download"></i>
               <p>Tulis Informasi</p>
             </a>

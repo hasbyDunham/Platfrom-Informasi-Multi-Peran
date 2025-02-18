@@ -27,7 +27,17 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:Admin']], func
     Route::resource('users', UserController::class);
     Route::resource('roles', RolesController::class);
     Route::resource('categories', CategorieController::class);
-    Route::resource('information', InformationController::class);
+
+    // Resource routes untuk information
+    Route::resource('information', InformationController::class)->names([
+        'index' => 'admin.information.index', // Nama route untuk admin
+        'create' => 'admin.information.create',
+        'store' => 'admin.information.store',
+        'show' => 'admin.information.show',
+        'edit' => 'admin.information.edit',
+        'update' => 'admin.information.update',
+        'destroy' => 'admin.information.destroy',
+    ]);
 });
 
 // ================== WRITER ROUTES ===================
@@ -35,7 +45,15 @@ Route::middleware(['auth', 'role:Writer'])->prefix('writer')->group(function () 
     Route::get('/', [WriterController::class, 'index'])->name('writer.index');
 
     // Resource route untuk Data Master
-    Route::resource('information', InformationController::class);
+    Route::resource('information', InformationController::class)->names([
+        'index' => 'writer.information.index', // Nama route untuk writer
+        'create' => 'writer.information.create',
+        'store' => 'writer.information.store',
+        'show' => 'writer.information.show',
+        'edit' => 'writer.information.edit',
+        'update' => 'writer.information.update',
+        'destroy' => 'writer.information.destroy',
+    ]);
 });
 
 // Route::group(['prefix' => 'writer', 'middleware' => ['auth', 'role:Writer']], function () {

@@ -27,7 +27,7 @@ class RolesController extends Controller
         $roles = Role::orderBy('id', 'asc')->paginate(5);
         confirmDelete("Delete", "Are you sure you want to delete?");
 
-        return view('roles.index', compact('roles'))->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('admin.dataMaster.roles.index', compact('roles'))->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -36,7 +36,7 @@ class RolesController extends Controller
     public function create()
     {
         $permission = Permission::get();
-        return view('roles.create', compact('permission'));
+        return view('admin.dataMaster.roles.create', compact('permission'));
     }
 
     /**
@@ -71,7 +71,7 @@ class RolesController extends Controller
             ->where("role_has_permissions.role_id", $id)
             ->get();
 
-        return view('roles.show', compact('role', 'rolePermissions'));
+        return view('admin.dataMaster.roles.show', compact('role', 'rolePermissions'));
     }
 
     /**
@@ -85,7 +85,7 @@ class RolesController extends Controller
             ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
             ->all();
 
-        return view('roles.update', compact('role', 'permission', 'rolePermissions'));
+        return view('admin.dataMaster.roles.update', compact('role', 'permission', 'rolePermissions'));
     }
 
     /**
