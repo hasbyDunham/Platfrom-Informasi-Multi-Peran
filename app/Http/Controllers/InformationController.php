@@ -23,23 +23,23 @@ class InformationController extends Controller
     {
         $user = Auth::user(); // Ambil user yang sedang login
 
-        $data = Information::with('user', 'category')
-            ->orderBy('created_at', 'desc')->paginate(5); // Urutkan dari yang terbaru
-
-        // Jika user adalah writer, hanya tampilkan informasi yang ditulis oleh mereka
         if ($user->hasRole('Writer')) {
-            $data->where('user_id', $user->id);
-            return view('writer.information.index', compact('data')); // View untuk writer
-        } elseif ($user->hasRole('Admin')) {
-            // Jika admin, tampilkan semua data
-            return view('admin.dataMaster.information.index', compact('data')); // View untuk admin
-        }
+            $data = Information::with('user', 'category')
+                ->where('user_id', $user->id) // Writer hanya melihat datanya sendiri
+                ->orderBy('created_at', 'desc')
+                ->paginate(5);
 
-        // $data = $data->paginate(5); // Eksekusi query
+            return view('writer.information.index', compact('data'));
+        } elseif ($user->hasRole('Admin')) {
+            $data = Information::with('user', 'category')
+                ->orderBy('created_at', 'desc')
+                ->paginate(5);
+
+            return view('admin.dataMaster.information.index', compact('data'));
+        }
 
         abort(403, 'Unauthorized access.'); // Akses ditolak jika bukan admin atau writer
 
-        // return view('adimin.dataMaster.information.index', compact('data'));
     }
 
     /**
@@ -47,8 +47,16 @@ class InformationController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
         $categories = Categorie::all(); // Ambil semua kategori
-        return view('admin.dataMaster.information.create', compact('categories'));
+
+        if ($user->hasRole('Writer')) {
+            return view('writer.information.create', compact('categories'));
+        } elseif ($user->hasRole('Admin')) {
+            return view('admin.dataMaster.information.create', compact('categories'));
+        }
+
+        abort(403, 'Unauthorized access.');
     }
 
     /**
@@ -88,6 +96,10 @@ class InformationController extends Controller
         toast('Information Added', 'success');
 
         // Redirect ke halaman informasi
+        if (auth()->user()->hasRole('Writer')) {
+            return redirect()->route('writer.information.index');
+        }
+
         return redirect()->route('admin.information.index');
     }
 
@@ -104,7 +116,20 @@ class InformationController extends Controller
      */
     public function edit(Information $information)
     {
-        return view('dataMaster.information.update', compact('information'));
+        $user = Auth::user();
+        $categories = Categorie::all();
+
+        if ($user->hasRole('Writer') && $user->id !== $information->user_id) {
+            abort(403, 'Unauthorized access.');
+        }
+
+        if ($user->hasRole('Writer')) {
+            return view('writer.information.update', compact('information', 'categories'));
+        } elseif ($user->hasRole('Admin')) {
+            return view('admin.dataMaster.information.update', compact('information', 'categories'));
+        }
+
+        abort(403, 'Unauthorized access.');
     }
 
     /**
@@ -112,6 +137,13 @@ class InformationController extends Controller
      */
     public function update(Request $request, Information $information)
     {
+
+        $user = Auth::user();
+
+        if ($user->hasRole('Writer') && $user->id !== $information->user_id) {
+            abort(403, 'Unauthorized access.');
+        }
+
         // Validasi input
         $request->validate([
             'title' => 'required|max:255',
@@ -128,9 +160,9 @@ class InformationController extends Controller
         $information->status = $request->status;
 
         // Update slug jika title berubah
-        if ($request->title !== $information->title) {
-            $information->slug = \Illuminate\Support\Str::slug($request->title);
-        }
+        // if ($request->title !== $information->title) {
+        //     $information->slug = \Illuminate\Support\Str::slug($request->title);
+        // }
 
         // Update gambar jika ada file baru
         if ($request->hasFile('image')) {
@@ -149,7 +181,11 @@ class InformationController extends Controller
         $information->save();
 
         toast('Information Updated', 'success');
-        return redirect()->route('information.index');
+        if ($user->hasRole('Writer')) {
+            return redirect()->route('writer.information.index');
+        }
+
+        return redirect()->route('admin.information.index');
     }
 
     /**
@@ -157,6 +193,12 @@ class InformationController extends Controller
      */
     public function destroy(Information $information)
     {
+        $user = Auth::user();
+
+        if ($user->hasRole('Writer') && $user->id !== $information->user_id) {
+            abort(403, 'Unauthorized access.');
+        }
+
         // Hapus gambar jika ada
         if ($information->image && file_exists(public_path($information->image))) {
             unlink(public_path($information->image));
@@ -166,6 +208,10 @@ class InformationController extends Controller
         $information->delete();
 
         toast('Information Deleted', 'success');
-        return redirect()->route('information.index');
+        if ($user->hasRole('Writer')) {
+            return redirect()->route('writer.information.index');
+        }
+
+        return redirect()->route('admin.information.index');
     }
 }

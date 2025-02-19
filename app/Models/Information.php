@@ -54,11 +54,30 @@ class Information extends Model
             // Set slug yang unik
             $information->slug = $slug;
         });
+
+        static::updating(function ($information) {
+            // Perbarui slug hanya jika title berubah
+            if ($information->isDirty('title')) {
+                $information->slug = Str::slug($information->title);
+
+                // Menangani duplikasi slug
+                $slug = $information->slug;
+                $originalSlug = $slug;
+                $count = 1;
+
+                while (Information::where('slug', $slug)->where('id', '!=', $information->id)->exists()) {
+                    $slug = $originalSlug . '-' . $count;
+                    $count++;
+                }
+
+                $information->slug = $slug;
+            }
+        });
     }
 
     public function getRouteKeyName()
     {
         return 'slug'; // Laravel akan otomatis mencari berdasarkan slug, bukan id
     }
-    
+
 }

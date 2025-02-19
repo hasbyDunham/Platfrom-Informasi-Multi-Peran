@@ -25,15 +25,17 @@
             <th>Title</th>
             <th>Category</th>
             <th>Description</th>
+            <th>Created By</th>
             <th>Created At</th>
-            <th width="280px">Action</th>
+            <th width="165px">Action</th>
         </tr>
         @foreach ($data as $key => $information)
             <tr>
                 <td>{{ ++$key }}</td>
                 <td>{{ $information->title }}</td>
                 <td>{{ $information->category->name }}</td>
-                <td>{{ Str::limit($information->description, 100) }}</td>
+                <td>{{ Str::limit($information->content, 100) }}</td>
+                <td>{{ $information->user->name ?? 'Unknown' }}</td> <!-- Menampilkan nama user -->
                 <td>{{ $information->created_at->format('d-m-Y') }}</td>
                 <td>
                     {{-- <a class="btn btn-info btn-sm" href="{{ route('information.show', $information->id) }}"><i
@@ -45,8 +47,10 @@
                         @csrf
                         @method('DELETE')
 
-                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i>
-                            Delete</button>
+                        <a href="{{ route('admin.information.destroy', $information->slug) }}" class="btn btn-sm btn-danger btn-sm"
+                            data-confirm-delete="true"><i class="fa-solid fa-trash"></i>Delete</a>
+                        {{-- <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i>
+                            Delete</button> --}}
                     </form>
                 </td>
             </tr>

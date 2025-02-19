@@ -4,15 +4,17 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>Create New Categories</h2>
+            <h2>Add New Information</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary btn-sm mb-2" href="{{ route('categories.index') }}"><i class="fa fa-arrow-left"></i> Back</a>
+            <a class="btn btn-primary btn-sm mb-2" href="{{ route('writer.information.index') }}">
+                <i class="fa fa-arrow-left"></i> Back
+            </a>
         </div>
     </div>
 </div>
 
-@if (count($errors) > 0)
+@if ($errors->any())
     <div class="alert alert-danger">
         <strong>Whoops!</strong> There were some problems with your input.<br><br>
         <ul>
@@ -23,24 +25,65 @@
     </div>
 @endif
 
-<form method="POST" action="{{ route('categories.store') }}">
+<form method="POST" action="{{ route('writer.information.store') }}" enctype="multipart/form-data">
     @csrf
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
+        <!-- Title -->
+        <div class="col-md-12">
             <div class="form-group">
-                <strong>Name:</strong>
-                <input type="text" name="name" placeholder="Name" class="form-control">
+                <strong>Title:</strong>
+                <input type="text" name="title" class="form-control" placeholder="Enter title" required>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group with-title mb-3">
-                <strong>Description:</strong>
-                <textarea class="form-control" name="description" id="exampleFormControlTextarea1"
-                    rows="3"></textarea>
+
+        <!-- Content -->
+        <div class="col-md-12">
+            <div class="form-group">
+                <strong>Content:</strong>
+                <textarea class="form-control" name="content" rows="3" placeholder="Enter content" required></textarea>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <button type="submit" class="btn btn-primary btn-sm mb-3"><i class="fa-solid fa-floppy-disk"></i> Submit</button>
+
+        <!-- Category -->
+        <div class="col-md-12">
+            <div class="form-group">
+                <strong>Category:</strong>
+                <select name="category_id" class="form-control" required>
+                    <option value="">Select Category</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <!-- Image -->
+        <div class="col-md-12">
+            <div class="form-group">
+                <strong>Image:</strong>
+                <input type="file" name="image" class="form-control">
+            </div>
+        </div>
+
+        <!-- Status -->
+        <div class="col-md-12">
+            <div class="form-group">
+                <strong>Status:</strong>
+                <select name="status" class="form-control" required>
+                    <option value="draft">Draft</option>
+                    <option value="published">Published</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- User ID (Hidden) -->
+        <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+
+        <!-- Submit Button -->
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary btn-sm mb-3">
+                <i class="fa-solid fa-floppy-disk"></i> Submit
+            </button>
         </div>
     </div>
 </form>
