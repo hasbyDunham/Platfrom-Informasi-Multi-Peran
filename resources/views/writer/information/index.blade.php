@@ -17,22 +17,23 @@
                         <th>Category</th>
                         <th>Description</th>
                         <th>Created At</th>
+                        <th>Status</th>
                         <th style="text-align: end">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($data as $key => $information)
                         <tr class="align-middle">
-                            <td>{{ $no++ }}</td>
+                            <td>{{ ++$key }}</td>
                             {{-- <td>
                                 <img src="{{ asset('/storage/information/' . $data->image) }}" class="rounded"
                                     style="width: 150px; height: 150px; object-fit: cover;">
                             </td> --}}
                             <td>
                                 <span class="text-toggle" onclick="toggleText(this)">
-                                    {{ Str::limit($informaion->title, 25, ' ...') }}
+                                    {{ Str::limit($information->title, 80, ' ...') }}
                                 </span>
-                                <span class="full-text" style="display: none;">{{ $informaion->title }}</span>
+                                <span class="full-text" style="display: none;">{{ $information->title }}</span>
                             </td>
                             <td>
                                 <span class="text-toggle" onclick="toggleText(this)">
@@ -50,19 +51,33 @@
                                 <span class="text-toggle" onclick="toggleText(this)">
                                     {{ Str::limit($information->created_at->format('d-m-Y'), 80, ' ...') }}
                                 </span>
-                                <span class="full-text" style="display: none;">{{ $information->created_at->format('d-m-Y') }}</span>
+                                <span class="full-text"
+                                    style="display: none;">{{ $information->created_at->format('d-m-Y') }}</span>
+                            </td>
+                            <td>
+                                @if ($information->status == 'draft')
+                                    <span class="badge bg-warning text-dark">Draft</span>
+                                @elseif ($information->status == 'published')
+                                    <span class="badge bg-success">Published</span>
+                                {{-- @elseif ($information->status == 'rejected')
+                                    <span class="badge bg-danger">Rejected</span> --}}
+                                @endif
                             </td>
                             <td style="width: 145px">
-                                <form action="{{ route('writer.information.destroy', $informaion->id) }}" method="POST"
+                                <form action="{{ route('writer.information.destroy', $information->slug) }}" method="POST"
                                     class="float-end">
                                     @csrf
                                     @method('DELETE')
-                                    {{-- <a href="{{ route('writer.information.show', $informaion->id) }}" class="btn btn-sm btn-dark">Show</a> | --}}
-                                    <a href="{{ route('writer.information.edit', $informaion->id) }}"
-                                        class="btn btn-sm btn-success">Edit</a>
+                                    {{-- <a href="{{ route('writer.information.show', $information->slug) }}" class="btn btn-sm btn-dark">Show</a> | --}}
+                                    <a href="{{ route('writer.information.edit', $information->slug) }}"
+                                        class="btn btn-sm btn-success">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
                                     |
-                                    <a href="{{ route('writer.information.destroy', $informaion->id) }}"
-                                        class="btn btn-sm btn-danger" data-confirm-delete="true">Delete</a>
+                                    <a href="{{ route('writer.information.destroy', $information->slug) }}"
+                                        class="btn btn-sm btn-danger" data-confirm-delete="true">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </a>
                                 </form>
                             </td>
                         </tr>
@@ -75,7 +90,7 @@
                     @endforelse
                 </tbody>
             </table>
-            {!! $information->withQueryString()->links('pagination::bootstrap-4') !!}
+            {!! $data->withQueryString()->links('pagination::bootstrap-4') !!}
         </div> <!-- /.card-body -->
     </div> <!-- /.card -->
 
@@ -116,16 +131,16 @@
         </div>
     @endif --}}
 
-    <table class="table table-bordered">
-        {{-- <tr>
+    {{-- <table class="table table-bordered">
+        <tr>
             <th>No</th>
             <th>Title</th>
             <th>Category</th>
             <th>Description</th>
             <th>Created At</th>
             <th width="280px">Action</th>
-        </tr> --}}
-        {{-- @foreach ($data as $key => $information)
+        </tr>
+        @foreach ($data as $key => $information)
             <tr>
                 <td>{{ ++$key }}</td>
                 <td>{{ $information->title }}</td>
@@ -133,8 +148,8 @@
                 <td>{{ Str::limit($information->content, 100) }}</td>
                 <td>{{ $information->created_at->format('d-m-Y') }}</td>
                 <td>
-                    {{-- <a class="btn btn-info btn-sm" href="{{ route('writer.information.show', $information->id) }}"><i
-                            class="fa-solid fa-eye"></i> Show</a> --}}
+                    <a class="btn btn-info btn-sm" href="{{ route('writer.information.show', $information->slug) }}"><i
+                            class="fa-solid fa-eye"></i> Show</a>
                     <a class="btn btn-warning btn-sm" href="{{ route('writer.information.edit', $information->slug) }}"><i
                             class="fa-solid fa-pen-to-square"></i> Edit</a>
                     <form method="POST" action="{{ route('writer.information.destroy', $information->slug) }}"
@@ -145,13 +160,13 @@
                         <a href="{{ route('writer.information.destroy', $information->slug) }}"
                             class="btn btn-sm btn-danger btn-sm" data-confirm-delete="true"><i
                                 class="fa-solid fa-trash"></i>Delete</a>
-                        {{-- <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i>
-                            Delete</button> --}}
+                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i>
+                            Delete</button>
                     </form>
                 </td>
             </tr>
-        @endforeach --}}
-    </table>
+        @endforeach
+    </table> --}}
 
     {{-- {!! $data->links('pagination::bootstrap-5') !!} --}}
 

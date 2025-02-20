@@ -151,7 +151,7 @@
                             {{-- Ganti dengan ikon yang sesuai --}}
                             {{-- <i class="bi bi-person-circle"></i> <!-- Contoh menggunakan Bootstrap Icons --> --}}
                             <p>
-                                <b> {{ Auth::user()->name }} </b> - Web Developer
+                                <b> {{ Auth::user()->name }} </b> - {{ Auth::user()->roles->pluck('name')->implode(', ') }}
                                 <small>Member since {{ Auth::user()->created_at->format('M. Y') }}</small>
                             </p>
                         </li>

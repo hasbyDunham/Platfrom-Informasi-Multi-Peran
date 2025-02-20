@@ -31,20 +31,8 @@
           <li class="nav-header">Data Master</li>
           <li class="nav-item">
             <a href="{{ route('writer.information.index') }}" class="nav-link">
-              <i class="nav-icon bi bi-download"></i>
-              <p>Tulis Informasi</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="./docs/layout.html" class="nav-link">
-              <i class="nav-icon bi bi-grip-horizontal"></i>
-              <p>Edit informasi</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="./docs/color-mode.html" class="nav-link">
-              <i class="nav-icon bi bi-star-half"></i>
-              <p>Hapus Informasi</p>
+                <i class="bi bi-newspaper"></i>
+              <p>Informasi Saya</p>
             </a>
           </li>
         </ul>

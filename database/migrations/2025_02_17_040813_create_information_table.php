@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained(); // Relasi ke tabel categories
             $table->foreignId('user_id')->constrained(); // Relasi ke tabel users
             $table->string('image', 255)->nullable();
-            $table->enum('status', ['draft', 'published']); // Contoh enum
+            $table->enum('approval_status', ['pending', 'approved', 'rejected'])->default('pending'); // Status approval
 
             $table->timestamps();
         });
