@@ -29,24 +29,28 @@
                                 <img src="{{ asset('/storage/information/' . $data->image) }}" class="rounded"
                                     style="width: 150px; height: 150px; object-fit: cover;">
                             </td> --}}
+                            {{-- TITLE --}}
                             <td>
                                 <span class="text-toggle" onclick="toggleText(this)">
                                     {{ Str::limit($information->title, 80, ' ...') }}
                                 </span>
                                 <span class="full-text" style="display: none;">{{ $information->title }}</span>
                             </td>
+                            {{-- CATEGORIES --}}
                             <td>
                                 <span class="text-toggle" onclick="toggleText(this)">
                                     {{ Str::limit($information->category->name, 80, ' ...') }}
                                 </span>
                                 <span class="full-text" style="display: none;">{{ $information->category->name }}</span>
                             </td>
+                            {{-- CONTENT --}}
                             <td>
                                 <span class="text-toggle" onclick="toggleText(this)">
                                     {{ Str::limit($information->content, 80, ' ...') }}
                                 </span>
                                 <span class="full-text" style="display: none;">{{ $information->content }}</span>
                             </td>
+                            {{-- CREATED-AT --}}
                             <td>
                                 <span class="text-toggle" onclick="toggleText(this)">
                                     {{ Str::limit($information->created_at->format('d-m-Y'), 80, ' ...') }}
@@ -54,15 +58,17 @@
                                 <span class="full-text"
                                     style="display: none;">{{ $information->created_at->format('d-m-Y') }}</span>
                             </td>
+                            {{-- STATUS --}}
                             <td>
-                                @if ($information->status == 'draft')
-                                    <span class="badge bg-warning text-dark">Draft</span>
-                                @elseif ($information->status == 'published')
+                                @if ($information->approval_status == 'approved')
                                     <span class="badge bg-success">Published</span>
-                                {{-- @elseif ($information->status == 'rejected')
-                                    <span class="badge bg-danger">Rejected</span> --}}
+                                @elseif ($information->approval_status == 'pending')
+                                    <span class="badge bg-warning">Draft</span>
+                                @elseif ($information->approval_status == 'rejected')
+                                    <span class="badge bg-danger">Rejected</span>
                                 @endif
                             </td>
+                            {{-- ACTION --}}
                             <td style="width: 145px">
                                 <form action="{{ route('writer.information.destroy', $information->slug) }}" method="POST"
                                     class="float-end">
@@ -83,7 +89,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center">
+                            <td colspan="7" class="text-center">
                                 Data Data Belum Tersedia.
                             </td>
                         </tr>

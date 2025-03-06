@@ -66,7 +66,7 @@
         </div>
 
         <!-- Status -->
-        <div class="col-md-12">
+        {{-- <div class="col-md-12">
             <div class="form-group">
                 <strong>Status:</strong>
                 <select name="status" class="form-control" required>
@@ -74,7 +74,7 @@
                     <option value="published">Published</option>
                 </select>
             </div>
-        </div>
+        </div> --}}
 
         <!-- User ID (Hidden) -->
         <input type="hidden" name="user_id" value="{{ auth()->id() }}">

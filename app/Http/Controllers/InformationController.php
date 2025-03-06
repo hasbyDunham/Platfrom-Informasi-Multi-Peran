@@ -69,8 +69,8 @@ class InformationController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
             'category_id' => 'required|exists:categories,id', // Pastikan kategori ada di database
-            'status' => 'required|in:draft,published',   // Hanya boleh draft atau published
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
+            // 'approval_status' => 'required|in:draft,published',   // Hanya boleh draft atau published
         ]);
 
         // Simpan data
@@ -79,7 +79,7 @@ class InformationController extends Controller
         $information->content = $request->content;
         $information->category_id = $request->category_id;
         $information->user_id = auth()->id(); // Ambil ID user yang sedang login
-        $information->status = $request->status;
+        $information->approval_status = 'pending';
 
         // Simpan gambar jika ada
         if ($request->hasFile('image')) {
@@ -93,7 +93,7 @@ class InformationController extends Controller
         $information->save();
 
         // Beri notifikasi sukses
-        toast('Information Added', 'success');
+        toast('Information submitted for approval', 'success');
 
         // Redirect ke halaman informasi
         if (auth()->user()->hasRole('Writer')) {
@@ -108,7 +108,25 @@ class InformationController extends Controller
      */
     public function show(Information $information)
     {
-        //
+        $user = Auth::user();
+        $categories = Categorie::all();
+
+        if ($user->hasRole('Writer') && $user->id !== $information->user_id) {
+            abort(403, 'Unauthorized access.');
+        }
+
+        // Jika role adalah writer, tampilkan tampilan writer
+        if ($user->hasRole('Writer')) {
+            return view('writer.information.show', compact('information', 'categories'));
+        }
+
+        // Jika role adalah admin, tampilkan tampilan admin
+        if ($user->hasRole('Admin')) {
+            return view('admin.dataMaster.information.show', compact('information', 'categories'));
+        }
+
+        // Jika role tidak dikenali, abort akses
+        abort(403, 'Unauthorized access.');
     }
 
     /**
@@ -149,7 +167,7 @@ class InformationController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
             'category_id' => 'required|exists:categories,id',
-            'status' => 'required|in:draft,published',
+            'approval_status' => 'required|in:draft,published',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -157,7 +175,7 @@ class InformationController extends Controller
         $information->title = $request->title;
         $information->content = $request->content;
         $information->category_id = $request->category_id;
-        $information->status = $request->status;
+        $information->approval_status = $request->approval_status;
 
         // Update slug jika title berubah
         // if ($request->title !== $information->title) {
@@ -187,6 +205,28 @@ class InformationController extends Controller
 
         return redirect()->route('admin.information.index');
     }
+
+
+    public function approve(Information $information)
+    {
+        $information->update(['approval_status' => 'approved']);
+
+        // Kirim notifikasi ke Writer
+        $information->user->notify(new InformationApproved('approved'));
+
+        return redirect()->back()->with('success', 'Information approved successfully.');
+    }
+
+    public function reject(Information $information)
+    {
+        $information->update(['approval_status' => 'rejected']);
+
+        // Kirim notifikasi ke Writer
+        $information->user->notify(new InformationApproved('rejected'));
+
+        return redirect()->back()->with('error', 'Information rejected.');
+    }
+
 
     /**
      * Remove the specified resource from storage.

@@ -38,6 +38,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:Admin']], func
         'update' => 'admin.information.update',
         'destroy' => 'admin.information.destroy',
     ]);
+
+    //Route Approval/Reject
+    Route::patch('/information/{information}/approve', [InformationController::class, 'approve'])->name('admin.information.approve');
+    Route::patch('/information/{information}/reject', [InformationController::class, 'reject'])->name('admin.information.reject');
+
 });
 
 // ================== WRITER ROUTES ===================
