@@ -73,7 +73,7 @@
                 </div>
 
                 <!-- Status -->
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <label for="status" class="form-label">Status</label>
                     <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
                         <option value="draft">Draft</option>
@@ -85,7 +85,7 @@
                         </span>
                     @enderror
                 </div>
-            </div>
+            </div> --}}
             <!--end::Body-->
 
             <!--begin::Footer-->

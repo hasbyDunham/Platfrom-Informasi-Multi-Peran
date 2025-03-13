@@ -31,6 +31,8 @@ class PermissionTableSeeder extends Seeder
             'information-create',
             'information-edit',
             'information-delete',
+            'information-approve',
+            'information-reject',
             'comment-list',
             'comment-create',
             'comment-edit',

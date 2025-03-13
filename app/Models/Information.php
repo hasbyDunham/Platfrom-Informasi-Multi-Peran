@@ -11,7 +11,7 @@ class Information extends Model
 
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'category_id', 'user_id', 'image', 'status'];
+    protected $fillable = ['title', 'content', 'category_id', 'user_id', 'image', 'approval_status'];
 
     public function user()
     {
@@ -20,7 +20,7 @@ class Information extends Model
 
     public function category()
     {
-        return $this->belongsTo(Categorie::class);
+        return $this->belongsTo(Categorie::class, 'category_id' );
     }
 
     // public function comments()

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorie;
 use App\Models\Information;
+use App\Notifications\InformationApproved;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,10 +12,16 @@ class InformationController extends Controller
 {
     public function __construct()
     {
+        // MIDDLEWARE CRUD PERMISSIOON
         $this->middleware('permission:information-list|information-create|information-edit|information-delete', ['only' => ['index', 'show']]);
         $this->middleware('permission:information-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:information-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:information-delete', ['only' => ['destroy']]);
+
+        // MIDDLEWARE APPROV / REJECT
+        $this->middleware('role:Admin', ['only' => ['approve', 'reject']]); // Pastikan Admin hanya bisa approve/reject
+        $this->middleware('permission:information-approve', ['only' => ['approve']]); // Pastikan hanya yang punya permission ini yang bisa approve
+        $this->middleware('permission:information-reject', ['only' => ['reject']]); // Pastikan hanya yang punya permission ini yang bisa reject
     }
     /**
      * Display a listing of the resource.
