@@ -25,6 +25,10 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function categories()
+    {
+        return $this->belongsToMany(Categorie::class, 'user_categories', 'user_id', 'category_id');
+    }
     public function informations()
     {
         return $this->hasMany(Information::class);

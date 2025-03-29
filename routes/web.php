@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
@@ -42,7 +43,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:Admin']], func
     //Route Approval/Reject
     Route::patch('/information/{information}/approve', [InformationController::class, 'approve'])->name('admin.information.approve');
     Route::patch('/information/{information}/reject', [InformationController::class, 'reject'])->name('admin.information.reject');
-
 });
 
 // ================== WRITER ROUTES ===================
@@ -74,8 +74,14 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth', 'role:User']], functi
 });
 
 
-    // Route::group(['middleware'=> ['auth']], function() {
-    //     Route::resource('roles', RolesController::class);
-    //     Route::resource('user', UserController::class);
-    //     Route::resource('categorie', CategorieController::class);
-    // });
+// Route::group(['middleware'=> ['auth']], function() {
+//     Route::resource('roles', RolesController::class);
+//     Route::resource('user', UserController::class);
+//     Route::resource('categorie', CategorieController::class);
+// });
+
+Route::get('/register/user', [RegisterController::class, 'showUserRegistrationForm'])->name('register.user');
+Route::post('/register/user', [RegisterController::class, 'registerUser']);
+
+Route::get('/register/writer', [RegisterController::class, 'showWriterRegistrationForm'])->name('register.writer');
+Route::post('/register/writer', [RegisterController::class, 'registerWriter']);
