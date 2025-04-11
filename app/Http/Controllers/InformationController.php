@@ -174,7 +174,7 @@ class InformationController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
             'category_id' => 'required|exists:categories,id',
-            'approval_status' => 'required|in:draft,published',
+            // 'approval_status' => 'required|in:draft,published',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -182,7 +182,7 @@ class InformationController extends Controller
         $information->title = $request->title;
         $information->content = $request->content;
         $information->category_id = $request->category_id;
-        $information->approval_status = $request->approval_status;
+        $information->approval_status = 'pending';
 
         // Update slug jika title berubah
         // if ($request->title !== $information->title) {

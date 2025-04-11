@@ -50,10 +50,16 @@
                     <i class="bi bi-person-circle"></i> {{ Auth::user()->name }}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                    {{-- Tautan Dashboard Admin --}}
+                    @if (auth()->user()->hasRole('Admin'))
+                        <li><a class="dropdown-item" href="{{ route('admin.index') }}">Dashboard Admin</a></li>
+                    @endif
+
                     {{-- Tautan Dashboard Writer --}}
                     @if (auth()->user()->hasRole('Writer'))
                         <li><a class="dropdown-item" href="{{ route('writer.index') }}">Dashboard Writer</a></li>
                     @endif
+
                     <li>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
@@ -67,6 +73,7 @@
             <a href="{{ route('login') }}" class="login-button"><i class="bi bi-person-circle"></i> Login</a>
         @endif
     </div>
+
 
     </div>
 </header>

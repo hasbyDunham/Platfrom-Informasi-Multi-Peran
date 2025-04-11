@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Information;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,15 +28,11 @@ class HomeController extends Controller
 
         // Mengecek apakah user sudah login dan memiliki role tertentu
         $user = Auth::user();
-
-        if ($user) {
-            if ($user->hasRole('Admin')) {
-                return redirect('/admin'); // Jika role Admin
-            }
-        }
-
+        $mainNews = Information::where('approval_status', 'approved')
+                ->latest()
+                ->first();
         // Jika tidak ada role yang sesuai, tetap tampilkan halaman utama
-        return view('front.home', compact('user'));
+        return view('front.home', compact('user', 'mainNews'));
 
         // return view('home');
     }

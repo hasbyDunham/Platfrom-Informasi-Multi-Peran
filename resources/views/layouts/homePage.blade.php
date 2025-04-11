@@ -110,7 +110,8 @@
 
       </div>
 
-    </section><!-- /Slider Section -->
+    </section>
+    <!-- /Slider Section -->
 
     <!-- Trending Category Section -->
     <section id="trending-category" class="trending-category section">
@@ -121,25 +122,30 @@
           <div class="row g-5">
             <div class="col-lg-4">
 
-              <div class="post-entry lg">
-                <a href="blog-details.html"><img src="{{ asset('assets/front/img/post-landscape-1.jpg') }}" alt="" class="img-fluid"></a>
-                <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
-                <h2><a href="blog-details.html">11 Work From Home Part-Time Jobs You Can Do Now</a></h2>
-                <p class="mb-4 d-block">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero temporibus repudiandae, inventore pariatur numquam cumque possimus exercitationem? Nihil tempore odit ab minus eveniet praesentium, similique blanditiis molestiae ut saepe perspiciatis officia nemo, eos quae cumque. Accusamus fugiat architecto rerum animi atque eveniet, quo, praesentium dignissimos</p>
+                @if ($mainNews)
+                <div class="post-entry lg">
+                  @if ($mainNews->image)
+                    <a href="{{ route('information.show', $mainNews->id) }}">
+                      <img src="{{ asset($mainNews->image) }}" alt="{{ $mainNews->title }}" class="img-fluid mb-2">
+                    </a>
+                  @endif
 
-                <div class="d-flex align-items-center author">
-                  <div class="photo"><img src="{{ asset('assets/front/img/person-1.jpg') }}" alt="" class="img-fluid"></div>
-                  <div class="name">
-                    <h3 class="m-0 p-0">Cameron Williamson</h3>
+                  <div class="post-meta">
+                    <span class="date">{{ $mainNews->category->name ?? 'Uncategorized' }}</span>
+                    <span class="mx-1">•</span>
+                    <span>{{ $mainNews->created_at->format("M jS 'y") }}</span>
                   </div>
+
+                  <h2><a href="{{ route('information.show', $mainNews->id) }}">{{ $mainNews->title }}</a></h2>
+                  <p class="mb-4 d-block">{{ Str::limit(strip_tags($mainNews->content), 200) }}</p>
                 </div>
-              </div>
+              @endif
 
             </div>
 
             <div class="col-lg-8">
               <div class="row g-5">
-                <div class="col-lg-4 border-start custom-border">
+                <div class="col-lg-6 border-start custom-border">
                   <div class="post-entry">
                     <a href="blog-details.html"><img src="{{ asset('assets/front/img/post-landscape-2.jpg') }}" alt="" class="img-fluid"></a>
                     <div class="post-meta"><span class="date">Sport</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
@@ -156,7 +162,7 @@
                     <h2><a href="blog-details.html">Why Craigslist Tampa Is One of The Most Interesting Places On the Web?</a></h2>
                   </div>
                 </div>
-                <div class="col-lg-4 border-start custom-border">
+                <div class="col-lg-6 border-start custom-border">
                   <div class="post-entry">
                     <a href="blog-details.html"><img src="{{ asset('assets/front/img/post-landscape-3.jpg') }}" alt="" class="img-fluid"></a>
                     <div class="post-meta"><span class="date">Business</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
@@ -175,7 +181,7 @@
                 </div>
 
                 <!-- Trending Section -->
-                <div class="col-lg-4">
+                {{-- <div class="col-lg-4">
 
                   <div class="trending">
                     <h3>Trending</h3>
@@ -218,7 +224,8 @@
                     </ul>
                   </div>
 
-                </div> <!-- End Trending Section -->
+                </div> --}}
+                <!-- End Trending Section -->
               </div>
             </div>
 
