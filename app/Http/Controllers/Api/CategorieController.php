@@ -35,7 +35,6 @@ class CategorieController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:categories|string|max:255',
-            'description' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -49,7 +48,6 @@ class CategorieController extends Controller
         try {
             $categorie = Categorie::create([
                 'name' => $request->name,
-                'description' => $request->description,
                 'slug' => Str::slug($request->name),
             ]);
             return response()->json([
@@ -72,7 +70,6 @@ class CategorieController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255|unique:categories,name,' . $categorie->id,
-            'description' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -86,7 +83,6 @@ class CategorieController extends Controller
         try {
             $categorie->update([
                 'name' => $request->name,
-                'description' => $request->description,
                 'slug' => Str::slug($request->name),
             ]);
 

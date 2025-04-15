@@ -13,7 +13,7 @@ class InformationController extends Controller
 {
     public function index()
     {
-        $informations = Information::with('category')->latest()->get();
+        $informations = Information::with(['category', 'user'])->latest()->get();
         return response()->json([
             'success' => true,
             'message' => 'Daftar Informasi',

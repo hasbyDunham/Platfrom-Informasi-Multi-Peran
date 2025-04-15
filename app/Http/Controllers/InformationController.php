@@ -35,13 +35,13 @@ class InformationController extends Controller
                 ->where('user_id', $user->id) // Writer hanya melihat datanya sendiri
                 ->orderBy('created_at', 'desc')
                 ->paginate(5);
-
+            confirmDelete("Delete", "Are you sure you want to delete?");
             return view('writer.information.index', compact('data'));
         } elseif ($user->hasRole('Admin')) {
             $data = Information::with('user', 'category')
                 ->orderBy('created_at', 'desc')
                 ->paginate(5);
-
+            confirmDelete("Delete", "Are you sure you want to delete?");
             return view('admin.dataMaster.information.index', compact('data'));
         }
 
