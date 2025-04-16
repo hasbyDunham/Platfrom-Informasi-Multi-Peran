@@ -65,22 +65,11 @@
             </div>
         </div>
 
-        <!-- Status -->
-        {{-- <div class="col-md-12">
-            <div class="form-group">
-                <strong>Status:</strong>
-                <select name="status" class="form-control" required>
-                    <option value="draft">Draft</option>
-                    <option value="published">Published</option>
-                </select>
-            </div>
-        </div> --}}
-
         <!-- User ID (Hidden) -->
         <input type="hidden" name="user_id" value="{{ auth()->id() }}">
 
         <!-- Submit Button -->
-        <div class="col-md-12 text-center">
+        <div class="col-md-12 text-center mt-3">
             <button type="submit" class="btn btn-primary btn-sm mb-3">
                 <i class="fa-solid fa-floppy-disk"></i> Submit
             </button>

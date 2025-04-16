@@ -71,19 +71,8 @@
             </div>
         </div>
 
-        <!-- Status -->
-        <div class="col-md-12">
-            <div class="form-group">
-                <strong>Status:</strong>
-                <select name="status" class="form-control" required>
-                    <option value="draft" {{ $information->status == 'draft' ? 'selected' : '' }}>Draft</option>
-                    <option value="published" {{ $information->status == 'published' ? 'selected' : '' }}>Published</option>
-                </select>
-            </div>
-        </div>
-
         <!-- Submit Button -->
-        <div class="col-md-12 text-center">
+        <div class="col-md-12 text-center mt-3">
             <button type="submit" class="btn btn-primary btn-sm mb-3">
                 <i class="fa-solid fa-floppy-disk"></i> Update
             </button>

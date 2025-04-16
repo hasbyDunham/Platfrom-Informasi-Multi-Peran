@@ -89,13 +89,11 @@ class InformationController extends Controller
         $information->approval_status = 'pending';
 
         // Simpan gambar jika ada
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = time() . '_' . $file->getClientOriginalName(); // Nama unik
-            $file->storeAs('public/images/informations', $filename); // Simpan ke storage
+        $file = $request->file('image');
+        $filename = time() . '_' . $file->getClientOriginalName(); // Nama unik
+        $file->storeAs('public/images/informations', $filename); // Simpan ke storage
 
-            $information->image = 'storage/images/informations/' . $filename; // Simpan path
-        }
+        $information->image = 'storage/images/informations/' . $filename; // Simpan path
 
         $information->save();
 
