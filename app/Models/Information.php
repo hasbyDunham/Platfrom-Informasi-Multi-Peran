@@ -20,7 +20,12 @@ class Information extends Model
 
     public function category()
     {
-        return $this->belongsTo(Categorie::class, 'category_id' );
+        return $this->belongsTo(Categorie::class, 'category_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     // public function comments()
@@ -79,5 +84,4 @@ class Information extends Model
     {
         return 'slug'; // Laravel akan otomatis mencari berdasarkan slug, bukan id
     }
-
 }

@@ -44,7 +44,7 @@
   <main class="main">
 
     <!-- Slider Section -->
-    <section id="slider" class="slider section dark-background">
+    {{-- <section id="slider" class="slider section dark-background">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
@@ -110,135 +110,15 @@
 
       </div>
 
-    </section>
+    </section> --}}
     <!-- /Slider Section -->
 
-    <!-- Trending Category Section -->
-    <section id="trending-category" class="trending-category section">
+    @yield('Content')
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-        <div class="container" data-aos="fade-up">
-          <div class="row g-5">
-            <div class="col-lg-4">
-
-                @if ($mainNews)
-                <div class="post-entry lg">
-                  @if ($mainNews->image)
-                    <a href="{{ route('information.show', $mainNews->id) }}">
-                      <img src="{{ asset($mainNews->image) }}" alt="{{ $mainNews->title }}" class="img-fluid mb-2">
-                    </a>
-                  @endif
-
-                  <div class="post-meta">
-                    <span class="date">{{ $mainNews->category->name ?? 'Uncategorized' }}</span>
-                    <span class="mx-1">•</span>
-                    <span>{{ $mainNews->created_at->format("M jS 'y") }}</span>
-                  </div>
-
-                  <h2><a href="{{ route('information.show', $mainNews->id) }}">{{ $mainNews->title }}</a></h2>
-                  <p class="mb-4 d-block">{{ Str::limit(strip_tags($mainNews->content), 200) }}</p>
-                </div>
-              @endif
-
-            </div>
-
-            <div class="col-lg-8">
-              <div class="row g-5">
-                <div class="col-lg-6 border-start custom-border">
-                  <div class="post-entry">
-                    <a href="blog-details.html"><img src="{{ asset('assets/front/img/post-landscape-2.jpg') }}" alt="" class="img-fluid"></a>
-                    <div class="post-meta"><span class="date">Sport</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
-                    <h2><a href="blog-details.html">Let’s Get Back to Work, New York</a></h2>
-                  </div>
-                  <div class="post-entry">
-                    <a href="blog-details.html"><img src="{{ asset('assets/front/img/post-landscape-5.jpg') }}" alt="" class="img-fluid"></a>
-                    <div class="post-meta"><span class="date">Food</span> <span class="mx-1">•</span> <span>Jul 17th '22</span></div>
-                    <h2><a href="blog-details.html">How to Avoid Distraction and Stay Focused During Video Calls?</a></h2>
-                  </div>
-                  <div class="post-entry">
-                    <a href="blog-details.html"><img src="{{ asset('assets/front/img/post-landscape-7.jpg') }}" alt="" class="img-fluid"></a>
-                    <div class="post-meta"><span class="date">Design</span> <span class="mx-1">•</span> <span>Mar 15th '22</span></div>
-                    <h2><a href="blog-details.html">Why Craigslist Tampa Is One of The Most Interesting Places On the Web?</a></h2>
-                  </div>
-                </div>
-                <div class="col-lg-6 border-start custom-border">
-                  <div class="post-entry">
-                    <a href="blog-details.html"><img src="{{ asset('assets/front/img/post-landscape-3.jpg') }}" alt="" class="img-fluid"></a>
-                    <div class="post-meta"><span class="date">Business</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
-                    <h2><a href="blog-details.html">6 Easy Steps To Create Your Own Cute Merch For Instagram</a></h2>
-                  </div>
-                  <div class="post-entry">
-                    <a href="blog-details.html"><img src="{{ asset('assets/front/img/post-landscape-6.jpg') }}" alt="" class="img-fluid"></a>
-                    <div class="post-meta"><span class="date">Tech</span> <span class="mx-1">•</span> <span>Mar 1st '22</span></div>
-                    <h2><a href="blog-details.html">10 Life-Changing Hacks Every Working Mom Should Know</a></h2>
-                  </div>
-                  <div class="post-entry">
-                    <a href="blog-details.html"><img src="{{ asset('assets/front/img/post-landscape-8.jpg') }}" alt="" class="img-fluid"></a>
-                    <div class="post-meta"><span class="date">Travel</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
-                    <h2><a href="blog-details.html">5 Great Startup Tips for Female Founders</a></h2>
-                  </div>
-                </div>
-
-                <!-- Trending Section -->
-                {{-- <div class="col-lg-4">
-
-                  <div class="trending">
-                    <h3>Trending</h3>
-                    <ul class="trending-post">
-                      <li>
-                        <a href="blog-details.html">
-                          <span class="number">1</span>
-                          <h3>The Best Homemade Masks for Face (keep the Pimples Away)</h3>
-                          <span class="author">Jane Cooper</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="blog-details.html">
-                          <span class="number">2</span>
-                          <h3>17 Pictures of Medium Length Hair in Layers That Will Inspire Your New Haircut</h3>
-                          <span class="author">Wade Warren</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="blog-details.html">
-                          <span class="number">3</span>
-                          <h3>13 Amazing Poems from Shel Silverstein with Valuable Life Lessons</h3>
-                          <span class="author">Esther Howard</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="blog-details.html">
-                          <span class="number">4</span>
-                          <h3>9 Half-up/half-down Hairstyles for Long and Medium Hair</h3>
-                          <span class="author">Cameron Williamson</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="blog-details.html">
-                          <span class="number">5</span>
-                          <h3>Life Insurance And Pregnancy: A Working Mom’s Guide</h3>
-                          <span class="author">Jenny Wilson</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-
-                </div> --}}
-                <!-- End Trending Section -->
-              </div>
-            </div>
-
-          </div> <!-- End .row -->
-        </div>
-
-      </div>
-
-    </section>
-    <!-- /Trending Category Section -->
 
     <!-- Culture Category Section -->
-    <section id="culture-category" class="culture-category section">
+    {{-- <section id="culture-category" class="culture-category section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -339,11 +219,11 @@
 
       </div>
 
-    </section>
+    </section> --}}
     <!-- /Culture Category Section -->
 
     <!-- Business Category Section -->
-    <section id="business-category" class="business-category section">
+    {{-- <section id="business-category" class="business-category section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -443,11 +323,11 @@
 
       </div>
 
-    </section>
+    </section> --}}
     <!-- /Business Category Section -->
 
     <!-- Lifestyle Category Section -->
-    <section id="lifestyle-category" class="lifestyle-category section">
+    {{-- <section id="lifestyle-category" class="lifestyle-category section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -571,7 +451,7 @@
 
       </div>
 
-    </section>
+    </section> --}}
     <!-- /Lifestyle Category Section -->
 
   </main>

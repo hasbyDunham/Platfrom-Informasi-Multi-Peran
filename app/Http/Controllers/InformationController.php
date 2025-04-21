@@ -89,11 +89,13 @@ class InformationController extends Controller
         $information->approval_status = 'pending';
 
         // Simpan gambar jika ada
-        $file = $request->file('image');
-        $filename = time() . '_' . $file->getClientOriginalName(); // Nama unik
-        $file->storeAs('public/images/informations', $filename); // Simpan ke storage
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName(); // Nama unik
+            $file->storeAs('public/images/informations', $filename); // Simpan ke storage
 
-        $information->image = 'storage/images/informations/' . $filename; // Simpan path
+            $information ['image'] = 'storage/images/informations/' . $filename; // Simpan path
+        }
 
         $information->save();
 
@@ -102,6 +104,7 @@ class InformationController extends Controller
 
         // Redirect ke halaman informasi
         if (auth()->user()->hasRole('Writer')) {
+            toast('Information submitted for approval', 'success');
             return redirect()->route('writer.information.index');
         }
 
@@ -121,9 +124,9 @@ class InformationController extends Controller
         }
 
         // Jika role adalah writer, tampilkan tampilan writer
-        if ($user->hasRole('Writer')) {
-            return view('writer.information.show', compact('information', 'categories'));
-        }
+        // if ($user->hasRole('Writer')) {
+        //     return view('writer.information.show', compact('information', 'categories'));
+        // }
 
         // Jika role adalah admin, tampilkan tampilan admin
         if ($user->hasRole('Admin')) {
@@ -198,7 +201,7 @@ class InformationController extends Controller
             $file = $request->file('image');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('images/informations'), $filename);
-            $information->image = 'images/informations/' . $filename;
+            $information ['image'] = 'images/informations/' . $filename;
         }
 
         $information->save();
@@ -254,6 +257,7 @@ class InformationController extends Controller
 
         toast('Information Deleted', 'success');
         if ($user->hasRole('Writer')) {
+            toast('Information Deleted', 'success');
             return redirect()->route('writer.information.index');
         }
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\WriterController;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/information/{slug}', [App\Http\Controllers\HomeController::class, 'singelInformation'])->name('detail');
+Route::post('/information/{slug}/comment', [HomeController::class, 'storeComment'])
+    ->middleware('auth')
+    ->name('information.comment');
 
 // ================== ADMIN ROUTES ===================
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:Admin']], function () {
@@ -28,6 +33,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:Admin']], func
     Route::resource('users', UserController::class);
     Route::resource('roles', RolesController::class);
     Route::resource('categories', CategorieController::class);
+    Route::resource('comment', CommentController::class);
 
     // Resource routes untuk information
     Route::resource('information', InformationController::class)->names([
