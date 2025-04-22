@@ -21,6 +21,7 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/information/{slug}', [App\Http\Controllers\HomeController::class, 'singelInformation'])->name('detail');
+Route::get('/categorie/{slug}', [HomeController::class, 'byCategory'])->name('information.byCategory');
 Route::post('/information/{slug}/comment', [HomeController::class, 'storeComment'])
     ->middleware('auth')
     ->name('information.comment');

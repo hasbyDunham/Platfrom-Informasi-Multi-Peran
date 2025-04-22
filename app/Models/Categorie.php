@@ -10,13 +10,20 @@ use Illuminate\Support\Str;
 class Categorie extends Model
 {
     protected $fillable = [
-        'name', 'description'
+        'name',
+        'slug'
     ];
 
     public function users()
     {
         return $this->belongsToMany(User::class, 'user_categories', 'user_id', 'category_id');
     }
+
+    public function informations()
+    {
+        return $this->hasMany(Information::class, 'category_id');
+    }
+
 
     // Menyimpan slug otomatis ketika membuat atau memperbarui berita
     public static function boot()
@@ -47,5 +54,4 @@ class Categorie extends Model
     }
 
     use HasFactory;
-
 }

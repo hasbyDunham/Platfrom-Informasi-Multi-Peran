@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorie;
 use App\Models\Information;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -64,4 +65,14 @@ class HomeController extends Controller
 
         return back()->with('success', 'Komentar berhasil dikirim.');
     }
+
+    public function byCategory($slug)
+    {
+        $category = Categorie::where('slug', $slug)->firstOrFail();
+
+        $informations = $category->informations()->latest()->paginate(6);
+
+        return view('front.byCategorie', compact('category', 'informations'));
+    }
+
 }
