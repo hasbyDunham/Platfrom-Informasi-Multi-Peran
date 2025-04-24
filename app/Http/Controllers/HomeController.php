@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Categorie;
@@ -28,14 +27,20 @@ class HomeController extends Controller
     {
 
         // Mengecek apakah user sudah login dan memiliki role tertentu
-        $user = Auth::user();
-        $mainNews = Information::latest()->first();
-        $otherNews = Information::where('id', '!=', optional($mainNews)->id)
+        $user       = Auth::user();
+        $categories = Categorie::with(['informations' => function ($query) {
+            $query->latest()->take(5); // ambil 5 berita terbaru per kategori
+        }])->get();
+        $mainNews = Information::where('approval_status', 'approved')
             ->latest()
-            ->take(6) // atau sebanyak yang kamu mau
+            ->first();
+        $otherNews = Information::where('id', '!=', optional($mainNews)->id)
+            ->where('approval_status', 'approved')
+            ->latest()
+            ->take(6)
             ->get();
         // Jika tidak ada role yang sesuai, tetap tampilkan halaman utama
-        return view('front.home', compact('user', 'mainNews', 'otherNews'));
+        return view('front.home', compact('user', 'mainNews', 'otherNews', 'categories'));
 
         // return view('home');
     }
@@ -47,7 +52,13 @@ class HomeController extends Controller
             ->where('approval_status', 'approved')
             ->firstOrFail();
 
-        return view('front.singelInformation', compact('information'));
+        $otherNews = Information::where('id', '!=', optional($information)->id)
+            ->where('approval_status', 'approved')
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('front.singelInformation', compact('information', 'otherNews'));
     }
 
     public function storeComment(Request $request, $slug)
@@ -60,7 +71,7 @@ class HomeController extends Controller
 
         $information->comments()->create([
             'user_id' => auth()->id(),
-            'body' => $request->body,
+            'body'    => $request->body,
         ]);
 
         return back()->with('success', 'Komentar berhasil dikirim.');
@@ -73,6 +84,18 @@ class HomeController extends Controller
         $informations = $category->informations()->latest()->paginate(6);
 
         return view('front.byCategorie', compact('category', 'informations'));
+    }
+
+
+    public function myInformation(){
+        $user = Auth::User();
+        $category = Categorie::All();
+        $information = Information::with('user', 'category')
+            ->Where('user_id', $user->id)
+            ->orderBy('createdAt', 'desc')
+            ->paginate(5);
+
+        return view('front.myInformation', compact('user', 'category', 'information'));
     }
 
 }

@@ -23,7 +23,7 @@
     <table class="table table-bordered">
         <tr>
             <th>No</th>
-            <th>Images</th>
+            {{-- <th>Images</th> --}}
             <th>Title</th>
             <th>Category</th>
             <th>Description</th>
@@ -35,10 +35,10 @@
         @foreach ($data as $key => $information)
             <tr>
                 <td>{{ ++$key }}</td>
-                <td>
+                {{-- <td>
                     <img src="{{ asset($information->image) }}" class="rounded"
                         style="width: 150px; height: 150px; object-fit: cover;">
-                </td>
+                </td> --}}
                 <td>{{ $information->title }}</td>
                 <td>{{ $information->category->name }}</td>
                 <td>{{ Str::limit($information->content, 100) }}</td>
